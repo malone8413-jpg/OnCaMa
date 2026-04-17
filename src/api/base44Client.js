@@ -6,29 +6,36 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const base44 = {
   auth: {
-    signIn: async (email, password) => {
-      return await createClient(supabaseUrl, supabaseKey).auth.signInWithPassword({
-        email,
-        password
-      })
-    },
+ signIn: async (email, password) => {
+  return await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+}
 
-    signUp: async (email, password) => {
-      return await createClient(supabaseUrl, supabaseKey).auth.signUp({
-        email,
-        password
-      })
-    },
+signUp: async (email, password) => {
+  return await supabase.auth.signUp({
+    email,
+    password
+  });
+},
 
-    signOut: async () => {
-      return await createClient(supabaseUrl, supabaseKey).auth.signOut()
-    },
+  signOut: async () => {
+  return await supabase.auth.signOut();
+}
 
-    getUser: async () => {
-      return await createClient(supabaseUrl, supabaseKey).auth.getUser()
-    }
-  },
+getUser: async () => {
+  const result = await supabase.auth.getUser();
 
+  if (result?.data?.user) {
+    result.data.user = {
+      ...result.data.user,
+      role: result.data.user.user_metadata?.role || null
+    };
+  }
+
+  return result;
+}
   db: {
     getAll: async (table) => {
       return await createClient(supabaseUrl, supabaseKey).from(table).select('*')
