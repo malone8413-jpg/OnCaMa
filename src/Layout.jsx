@@ -81,25 +81,29 @@ const handleLogin = async () => {
 
     const { data, error } = await base44.auth.signIn(email, password);
 
+    console.log("LOGIN RESULT:", data, error); // 🔥 IMPORTANT
+
     if (error) {
       alert(error.message);
       return;
     }
 
     const { data: userData } = await base44.auth.getUser();
+
+    console.log("USER DATA:", userData); // 🔥 IMPORTANT
+
     setUser(userData?.user ?? null);
 
     setShowAuthBox(false);
     setEmail('');
     setPassword('');
   } catch (e) {
-    console.error(e);
-    alert("Erreur lors de la connexion");
+    console.error("LOGIN ERROR:", e); // 🔥 IMPORTANT
+    alert(e.message || "Erreur réelle affichée ici");
   } finally {
     setAuthLoading(false);
   }
 };
-
 const handleSignup = async () => {
   try {
     setAuthLoading(true);
