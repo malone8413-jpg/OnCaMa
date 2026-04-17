@@ -75,48 +75,56 @@ export default function Layout({ children, currentPageName }) {
     loadUser();
   }, [currentPageName]);
 
-  const handleLogin = async () => {
-    try {
-      setAuthLoading(true);
-      const { data, error } = await base44.auth.signIn(email, password);
+const handleLogin = async () => {
+  try {
+    setAuthLoading(true);
 
-      if (error) {
-        alert(error.message);
-        return;
-      }
+    const { data, error } = await base44.auth.signIn(email, password);
 
-      setUser(data?.user ?? null);
-      setShowAuthBox(false);
-      setEmail('');
-      setPassword('');
-    } catch (e) {
-      alert("Erreur lors de la connexion");
-    } finally {
-      setAuthLoading(false);
+    if (error) {
+      alert(error.message);
+      return;
     }
-  };
 
-  const handleSignup = async () => {
-    try {
-      setAuthLoading(true);
-      const { data, error } = await base44.auth.signUp(email, password);
+    const { data: userData } = await base44.auth.getUser();
+    setUser(userData?.user ?? null);
 
-      if (error) {
-        alert(error.message);
-        return;
-      }
+    setShowAuthBox(false);
+    setEmail('');
+    setPassword('');
+  } catch (e) {
+    console.error(e);
+    alert("Erreur lors de la connexion");
+  } finally {
+    setAuthLoading(false);
+  }
+};
 
-      alert("Compte créé avec succès");
-      setUser(data?.user ?? null);
-      setShowAuthBox(false);
-      setEmail('');
-      setPassword('');
-    } catch (e) {
-      alert("Erreur lors de la création du compte");
-    } finally {
-      setAuthLoading(false);
+const handleSignup = async () => {
+  try {
+    setAuthLoading(true);
+
+    const { error } = await base44.auth.signUp(email, password);
+
+    if (error) {
+      alert(error.message);
+      return;
     }
-  };
+
+    const { data: userData } = await base44.auth.getUser();
+    setUser(userData?.user ?? null);
+
+    setShowAuthBox(false);
+    setEmail('');
+    setPassword('');
+    alert("Compte créé avec succès");
+  } catch (e) {
+    console.error(e);
+    alert("Erreur lors de la création du compte");
+  } finally {
+    setAuthLoading(false);
+  }
+};
 
   const handleLogout = async () => {
     try {
