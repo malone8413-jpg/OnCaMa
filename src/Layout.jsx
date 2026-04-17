@@ -150,7 +150,7 @@ export default function Layout({ children, currentPageName }) {
             <div className="hidden md:flex items-center gap-1">
               {navItems
                 .filter((item) => {
-                  if (item.staffOnly) return staffRoles.includes(user?.role);
+                  if (item.staffOnly) return staffRoles.includes(user?.role || user?.user_metadata?.role);
                   if (item.clubOnly) return !!(user?.has_selected_club || user?.club_id);
                   if (item.authOnly) return !!user;
                   return true;
@@ -289,7 +289,7 @@ export default function Layout({ children, currentPageName }) {
               <div className="px-4 py-4 space-y-2">
                 {navItems
                   .filter((item) => {
-                    if (item.staffOnly) return staffRoles.includes(user?.role);
+                    if (item.staffOnly) return staffRoles.includes(user?.role || user?.user_metadata?.role);
                     if (item.clubOnly) return !!(user?.has_selected_club || user?.club_id);
                     if (item.authOnly) return !!user;
                     return true;
