@@ -3,12 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// 🔥 UN SEUL CLIENT (IMPORTANT)
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const base44 = {
   auth: {
-    // LOGIN
     signIn: async (email, password) => {
       return await supabase.auth.signInWithPassword({
         email,
@@ -16,7 +14,6 @@ export const base44 = {
       });
     },
 
-    // SIGNUP
     signUp: async (email, password) => {
       return await supabase.auth.signUp({
         email,
@@ -24,12 +21,10 @@ export const base44 = {
       });
     },
 
-    // LOGOUT
     signOut: async () => {
       return await supabase.auth.signOut();
     },
 
-    // GET USER (AVEC ROLE)
     getUser: async () => {
       const result = await supabase.auth.getUser();
 
