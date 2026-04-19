@@ -14,6 +14,7 @@ import Notifications from './pages/Notifications'
 import Support from './pages/Support'
 import Informations from './pages/Informations'
 import ClubProfile from './pages/ClubProfile'
+import Login from './pages/Login';
 
 const { Pages, Layout, mainPage } = pagesConfig
 const mainPageKey = mainPage ?? Object.keys(Pages)[0]
