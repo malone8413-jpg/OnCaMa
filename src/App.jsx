@@ -64,4 +64,58 @@ const AuthenticatedApp = () => {
         />
       ))}
       <Route path="/StaffRoom" element={
-        <LayoutWrapper c
+        <LayoutWrapper currentPageName="StaffRoom">
+          <StaffRoom />
+        </LayoutWrapper>
+      } />
+      <Route path="/ImportPlayersFile" element={
+        <LayoutWrapper currentPageName="ImportPlayersFile">
+          <ImportPlayersFile />
+        </LayoutWrapper>
+      } />
+      <Route path="/Tactics" element={
+        <LayoutWrapper currentPageName="Tactics">
+          <Tactics />
+        </LayoutWrapper>
+      } />
+      <Route path="/Notifications" element={
+        <LayoutWrapper currentPageName="Notifications">
+          <Notifications />
+        </LayoutWrapper>
+      } />
+      <Route path="/Support" element={
+        <LayoutWrapper currentPageName="Support">
+          <Support />
+        </LayoutWrapper>
+      } />
+      <Route path="/Informations" element={
+        <LayoutWrapper currentPageName="Informations">
+          <Informations />
+        </LayoutWrapper>
+      } />
+      <Route path="/ClubProfile" element={
+        <LayoutWrapper currentPageName="ClubProfile">
+          <ClubProfile />
+        </LayoutWrapper>
+      } />
+      <Route path="/Dashboard" element={<Navigate to="/ClubSpace" replace />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <QueryClientProvider client={queryClientInstance}>
+        <Router>
+          <NavigationTracker />
+          <AuthenticatedApp />
+        </Router>
+        <Toaster />
+      </QueryClientProvider>
+    </AuthProvider>
+  );
+}
+
+export default App
